@@ -1,0 +1,6 @@
+/target/
+/dist/
+*.log
+*.partial
+.DS_Store
+Thumbs.db

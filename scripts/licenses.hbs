@@ -1,0 +1,9 @@
+<!doctype html>
+<html lang="en"><meta charset="utf-8"><title>Workshop Device — third-party notices</title>
+<style>body{font:16px system-ui;max-width:960px;margin:40px auto;padding:24px}pre{white-space:pre-wrap;overflow-wrap:anywhere;font:13px monospace}section{border-top:1px solid #bbb;margin-top:32px;padding-top:16px}a{color:#246}</style>
+<h1>Third-party license notices</h1>
+<p>Workshop Device includes software distributed under the following licenses. These notices were generated from the locked dependency graph for Windows x64 using cargo-about. Third-party code retains its own license.</p>
+{{#each licenses}}
+<section><h2>{{name}}</h2><ul>{{#each used_by}}<li>{{crate.name}} {{crate.version}}</li>{{/each}}</ul><pre>{{text}}</pre></section>
+{{/each}}
+</html>

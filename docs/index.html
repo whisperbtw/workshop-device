@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="Workshop Device: a minimal native Windows downloader for Project Zomboid Workshop mods. Open source, built with Rust and GPUI.">
+  <meta name="theme-color" content="#181819">
+  <title>Workshop Device — mod downloads, simply</title>
+  <link rel="icon" type="image/png" href="app-icon.png">
+  <style>
+    :root{color-scheme:dark;font-family:system-ui,-apple-system,"Segoe UI",sans-serif;background:#181819;color:#e7e6df}
+    *{box-sizing:border-box}body{margin:0}a{color:inherit;text-decoration:none}a:hover{text-decoration:underline}
+    .wrap{max-width:1000px;margin:auto;padding:0 32px}header{display:flex;align-items:center;justify-content:space-between;padding:28px 0;border-bottom:1px solid #333}
+    .brand{font-size:11px;font-weight:600;letter-spacing:.22em}.dot{display:inline-block;width:6px;height:6px;border-radius:50%;background:#c65c5d;margin-right:12px}
+    select{font:inherit;font-size:12px;border:1px solid #444;background:#222;color:#ddd;padding:8px 10px;border-radius:6px}
+    .hero{display:grid;grid-template-columns:1.2fr 1fr;align-items:center;gap:40px;padding:70px 0 60px}.eyebrow{font-size:10px;letter-spacing:.2em;color:#aaa9a1;text-transform:uppercase}
+    h1{font-size:clamp(36px,5vw,56px);font-weight:450;line-height:1.08;letter-spacing:-.045em;margin:20px 0}p{font-size:15px;color:#b7b7b0;line-height:1.8}
+    .hero img{width:100%;max-width:340px;justify-self:center;filter:drop-shadow(0 20px 24px #0005)}
+    .button{display:inline-flex;align-items:center;gap:20px;background:#deddd4;color:#222;font-size:13px;font-weight:600;padding:15px 20px;border-radius:8px;margin:18px 0 10px;box-shadow:0 2px 0 #aaa99f}
+    .button:hover{background:#efeee5;text-decoration:none}.button:active{transform:translateY(2px);box-shadow:none}
+    .small{font-size:11px;color:#92928d}.links{display:flex;gap:24px;font-size:12px;margin-top:12px}.links a{border-bottom:1px solid #555;padding-bottom:4px}
+    .features{display:grid;grid-template-columns:repeat(3,1fr);gap:32px;border-top:1px solid #333;padding:32px 0 44px}.number{font-size:11px;color:#c65c5d}h2{font-size:17px;font-weight:500;letter-spacing:-.02em;margin:12px 0 6px}
+    .features p{font-size:13px;margin:0}.note{border-top:1px solid #333;padding:28px 0}.note h2{margin-top:0}.note p{font-size:13px;max-width:770px}
+    footer{padding:22px 0 32px;border-top:1px solid #333;font-size:11px;color:#94948e;display:flex;justify-content:space-between;gap:20px}
+    :focus-visible{outline:2px solid #e7e6df;outline-offset:5px}
+    @media(max-width:640px){.wrap{padding:0 24px}.hero{grid-template-columns:1fr;gap:18px;padding:42px 0}.hero img{grid-row:1;width:180px}.features{grid-template-columns:1fr;gap:24px}footer{flex-direction:column}h1{font-size:40px}}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header><a class="brand" href="./"><span class="dot"></span>WORKSHOP DEVICE</a><label><span class="small" data-t="language">Language</span> <select id="language" aria-label="Language"><option value="en">English</option><option value="pt">Português</option><option value="ja">日本語</option></select></label></header>
+    <main>
+      <section class="hero">
+        <div><span class="eyebrow" data-t="eyebrow">WINDOWS · RUST · GPUI</span><h1 data-t="title">Your mods.<br>In your folder.</h1>
+          <p data-t="intro">Paste a Project Zomboid Workshop link, choose a destination and press download. A small native app that feels like a device.</p>
+          <a class="button" href="https://github.com/whisperbtw/workshop-device/releases/latest"><span data-t="download">Download for Windows</span><span aria-hidden="true">↓</span></a>
+          <div class="small" data-t="version">Installer + portable · Windows 10/11 x64</div>
+          <div class="links"><a id="readme" href="https://github.com/whisperbtw/workshop-device#readme" data-t="readme">Read the guide</a><a href="https://github.com/whisperbtw/workshop-device" data-t="source">Source code</a></div>
+        </div>
+        <img src="app-icon.png" width="340" height="340" alt="Workshop Device application artwork — a black download appliance" fetchpriority="high">
+      </section>
+      <section class="features" aria-label="Features">
+        <div><span class="number">01</span><h2 data-t="one">One link. One folder.</h2><p data-t="oneText">Official SteamCMD, prepared automatically. Each completed mod gets its own folder.</p></div>
+        <div><span class="number">02</span><h2 data-t="two">A native little device.</h2><p data-t="twoText">Rounded edges, physical button animation and status inside the display. Built in Rust with GPUI.</p></div>
+        <div><span class="number">03</span><h2 data-t="three">In your language.</h2><p data-t="threeText">English, Portuguese and Japanese. The first launch detects your Windows language.</p></div>
+      </section>
+      <section class="note"><h2 data-t="limits">Before you download</h2><p data-t="limitsText">Supports individual Project Zomboid items that permit anonymous SteamCMD access. Collections and login-required items are unsupported. Downloading saves files; installation and activation in the game are up to you. The release is unsigned.</p><p class="small" data-t="art">The illustration is application artwork, not a screenshot.</p></section>
+      <section class="note"><h2 data-t="contribute">Contributions welcome.</h2><p data-t="contributeText">Help improve translations, accessibility, reliability or the native interface. Read the contribution guide, open an issue or send a focused pull request.</p><div class="links"><a id="contributing" href="https://github.com/whisperbtw/workshop-device/blob/main/CONTRIBUTING.md" data-t="contributionGuide">Contribution guide</a><a href="https://github.com/whisperbtw/workshop-device/issues" data-t="issues">Issues and ideas</a></div></section>
+    </main>
+    <footer><span>Workshop Device · whisperbtw · MIT</span><span data-t="community">Community project. Not affiliated with Valve or The Indie Stone.</span></footer>
+  </div>
+  <script src="site.js"></script>
+</body>
+</html>

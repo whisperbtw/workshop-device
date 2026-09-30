@@ -1,0 +1,28 @@
+name: Bug report
+description: Report a reproducible problem / Relatar problema / 不具合報告
+labels: ["bug"]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem / Problema / 問題
+      description: Describe what happened and what you expected.
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: App version, Windows version and display scaling
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Screenshots or sanitized logs
+      description: Remove credentials and personal paths. Do not attach downloaded mods.
