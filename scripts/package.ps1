@@ -14,6 +14,9 @@ try {
     $targetRoot = if ($env:CARGO_TARGET_DIR) { $env:CARGO_TARGET_DIR } else { Join-Path $projectRoot 'target' }
     $binary = Join-Path $targetRoot 'release/pz-workshop-downloader.exe'
     if (-not (Test-Path -LiteralPath $binary)) { throw 'Release binary not found' }
+    if ([Diagnostics.FileVersionInfo]::GetVersionInfo($binary).FileVersion -ne $version) {
+        throw 'Release binary version does not match Cargo.toml; rebuild before packaging'
+    }
     if (-not $IsccPath) {
         $candidates = @(
             "$env:LOCALAPPDATA/Programs/Inno Setup 6/ISCC.exe",

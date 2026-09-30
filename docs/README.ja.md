@@ -14,9 +14,9 @@
 
 Windows 10/11 x64、インターネット接続、GPUI の描画に対応したグラフィックスドライバーが必要です。
 
-- **インストーラー:** Releases から `Workshop-Device-Setup-1.0.0.exe` をダウンロードします。現在の Windows ユーザー向けにインストールされ、スタートメニューのショートカットとアンインストーラーが作成されます。デスクトップのショートカットは任意です。管理者権限は不要です。
-- **ポータブル版:** `Workshop-Device-1.0.0-windows-x64.zip` を展開し、`Workshop-Device.exe` を開きます。付属のライセンス通知も保管してください。
-- `SHA256SUMS.txt` に配布ファイルの SHA-256 ハッシュがあります。`Get-FileHash .\Workshop-Device-Setup-1.0.0.exe -Algorithm SHA256` で確認できます。
+- **インストーラー:** Releases から `Workshop-Device-Setup-1.0.1.exe` をダウンロードします。現在の Windows ユーザー向けにインストールされ、スタートメニューのショートカットとアンインストーラーが作成されます。デスクトップのショートカットは任意です。管理者権限は不要です。
+- **ポータブル版:** `Workshop-Device-1.0.1-windows-x64.zip` を展開し、`Workshop-Device.exe` を開きます。付属のライセンス通知も保管してください。
+- `SHA256SUMS.txt` に配布ファイルの SHA-256 ハッシュがあります。`Get-FileHash .\Workshop-Device-Setup-1.0.1.exe -Algorithm SHA256` で確認できます。
 
 初回リリースにはコード署名がありません。Windows が発行元不明の警告を表示する場合があります。このリポジトリの Releases からダウンロードしてください。
 

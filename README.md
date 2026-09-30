@@ -14,9 +14,9 @@ The image above is application artwork, not a screenshot.
 
 Requires Windows 10/11 x64, internet access and a graphics driver compatible with the GPUI renderer.
 
-- **Installer:** download `Workshop-Device-Setup-1.0.0.exe` from Releases. It installs for your Windows user, creates a Start menu shortcut, offers an optional desktop shortcut and includes an uninstaller. No administrator access is required.
-- **Portable:** extract `Workshop-Device-1.0.0-windows-x64.zip` and open `Workshop-Device.exe`. Keep the included license notices with it.
-- `SHA256SUMS.txt` lists the SHA-256 hashes of the release files. Compare with `Get-FileHash .\Workshop-Device-Setup-1.0.0.exe -Algorithm SHA256`.
+- **Installer:** download `Workshop-Device-Setup-1.0.1.exe` from Releases. It installs for your Windows user, creates a Start menu shortcut, offers an optional desktop shortcut and includes an uninstaller. No administrator access is required.
+- **Portable:** extract `Workshop-Device-1.0.1-windows-x64.zip` and open `Workshop-Device.exe`. Keep the included license notices with it.
+- `SHA256SUMS.txt` lists the SHA-256 hashes of the release files. Compare with `Get-FileHash .\Workshop-Device-Setup-1.0.1.exe -Algorithm SHA256`.
 
 The initial release is not code-signed. Windows may show an unknown-publisher warning. Download only from this repository's Releases.
 

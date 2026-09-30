@@ -14,9 +14,9 @@ A imagem acima é a arte do aplicativo, não uma captura de tela.
 
 Requer Windows 10/11 x64, internet e um driver gráfico compatível com o renderizador do GPUI.
 
-- **Instalador:** baixe `Workshop-Device-Setup-1.0.0.exe` na seção Releases. Instala para o seu usuário, cria um atalho no menu Iniciar, oferece um atalho opcional na área de trabalho e inclui desinstalador. Não exige administrador.
-- **Portátil:** extraia `Workshop-Device-1.0.0-windows-x64.zip` e abra `Workshop-Device.exe`. Mantenha os avisos de licença incluídos.
-- `SHA256SUMS.txt` contém os hashes dos arquivos. Confira com `Get-FileHash .\Workshop-Device-Setup-1.0.0.exe -Algorithm SHA256`.
+- **Instalador:** baixe `Workshop-Device-Setup-1.0.1.exe` na seção Releases. Instala para o seu usuário, cria um atalho no menu Iniciar, oferece um atalho opcional na área de trabalho e inclui desinstalador. Não exige administrador.
+- **Portátil:** extraia `Workshop-Device-1.0.1-windows-x64.zip` e abra `Workshop-Device.exe`. Mantenha os avisos de licença incluídos.
+- `SHA256SUMS.txt` contém os hashes dos arquivos. Confira com `Get-FileHash .\Workshop-Device-Setup-1.0.1.exe -Algorithm SHA256`.
 
 A primeira versão não tem assinatura digital. O Windows pode mostrar um aviso de publicador desconhecido. Baixe apenas das Releases deste repositório.
 

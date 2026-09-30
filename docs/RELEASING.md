@@ -9,4 +9,4 @@
 7. The tag workflow validates again, packages the Windows release, saves artifacts and publishes a GitHub Release if that tag does not already have one. Existing release assets are preserved.
 8. Open the published release and verify installer, ZIP, standalone executable, both license notice files and SHA256SUMS.txt. The public site is deployed from main:/docs by GitHub Pages.
 
-For manual publication, use gh release create with --verify-tag and --notes-file RELEASE-NOTES.md. Attach all top-level dist files; never upload a stage directory or runtime cache. The initial release is unsigned. A future signed release needs the maintainer's own signing certificate; do not store signing keys in source control.
+For manual publication, use gh release create with --verify-tag and --notes-file RELEASE-NOTES.md. Attach the files named in dist/SHA256SUMS.txt plus that checksum file; never upload a stage directory, runtime cache or older-version installer. The initial release is unsigned. A future signed release needs the maintainer's own signing certificate; do not store signing keys in source control.
