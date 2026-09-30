@@ -30,7 +30,7 @@ A previous validation of the same release downloaded **RimWorld — Harmony**, i
 
 Success proves that these specific items could be downloaded at this time. It does not guarantee every Workshop item for a game, future availability, game-version compatibility or correct installation inside the game. Dependencies of an item are not downloaded automatically.
 
-For Cities: Skylines, SteamCMD connected anonymously and reported `Download item 2040656402 failed (Failure)`. This response does not establish the precise cause. It may reflect access restrictions or another Steam-side failure; a single failed item is not evidence that the entire game's Workshop is unsupported. The app does not bypass the failure or add a Steam login flow.
+For Cities: Skylines, SteamCMD connected anonymously and reported `Download item 2040656402 failed (Failure)`. Further inspection of SteamCMD’s workshop and content logs identified the underlying error: `Failed to initialize depot 255710` / `Missing decryption key`. The anonymous session did not receive the key required to read this Workshop depot. The item metadata was public and not banned. An authenticated account with the appropriate game access may resolve the missing key, but authenticated downloading was not tested. This result does not prove that every item is incompatible. The app does not bypass the failure or add a Steam login flow.
 
 ## Code signing
 
