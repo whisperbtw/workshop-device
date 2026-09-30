@@ -14,9 +14,9 @@ The image above is application artwork, not a screenshot.
 
 Requires Windows 10/11 x64, internet access and a graphics driver compatible with the GPUI renderer.
 
-- **Installer:** download `Workshop-Device-Setup-1.1.0.exe` from Releases. It installs for your Windows user, creates a Start menu shortcut, offers an optional desktop shortcut and includes an uninstaller. No administrator access is required.
-- **Portable:** extract `Workshop-Device-1.1.0-windows-x64.zip` and open `Workshop-Device.exe`. Keep the included license notices with it.
-- `SHA256SUMS.txt` lists the SHA-256 hashes of the release files. Compare with `Get-FileHash .\Workshop-Device-Setup-1.1.0.exe -Algorithm SHA256`.
+- **Installer:** download `Workshop-Device-Setup-1.2.0.exe` from Releases. It installs for your Windows user, creates a Start menu shortcut, offers an optional desktop shortcut and includes an uninstaller. No administrator access is required.
+- **Portable:** extract `Workshop-Device-1.2.0-windows-x64.zip` and open `Workshop-Device.exe`. Keep the included license notices with it.
+- `SHA256SUMS.txt` lists the SHA-256 hashes of the release files. Compare with `Get-FileHash .\Workshop-Device-Setup-1.2.0.exe -Algorithm SHA256`.
 
 The application is intentionally unsigned; code signing is not planned. Windows may show an unknown-publisher warning. Download only from this repository's Releases.
 
@@ -31,6 +31,10 @@ The application is intentionally unsigned; code signing is not planned. Windows 
 The official SteamCMD client is downloaded and prepared automatically on first use. The initial destination is your Windows Downloads folder plus `Workshop`; you can choose any writable folder. Each completed download is saved to a new `<workshop-id>-<timestamp>` subfolder. Existing downloads are not overwritten.
 
 Drag the top grip to move the window. The engraved **−** and **×** controls minimize and close it. The download control becomes **STOP** while working. Closing the app stops its SteamCMD process.
+
+After Steam identifies the item, the display shows its **game and item name**. The **Dependencies not included** link opens the item's Workshop page so you can check required items and installation instructions; dependencies are not downloaded automatically.
+
+Errors distinguish missing access keys, denied access, connection problems, unavailable items and saving failures when evidence is available. Unknown SteamCMD failures remain explicitly unknown. **Copy diagnostic** copies the app version, error category and available item/game IDs for a bug report. It excludes personal paths and raw Steam logs.
 
 ## What it can download
 

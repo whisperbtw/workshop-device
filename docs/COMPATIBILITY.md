@@ -32,6 +32,12 @@ Success proves that these specific items could be downloaded at this time. It do
 
 For Cities: Skylines, SteamCMD connected anonymously and reported `Download item 2040656402 failed (Failure)`. Further inspection of SteamCMD’s workshop and content logs identified the underlying error: `Failed to initialize depot 255710` / `Missing decryption key`. The anonymous session did not receive the key required to read this Workshop depot. The item metadata was public and not banned. An authenticated account with the appropriate game access may resolve the missing key, but authenticated downloading was not tested. This result does not prove that every item is incompatible. The app does not bypass the failure or add a Steam login flow.
 
+## Version 1.2.0 regression checks
+
+The same day, version 1.2.0 was checked with 13 passing unit tests, strict Clippy and a release build. A real Cities: Skylines retry produced the specific `MissingKey` diagnostic for item `2040656402` and app `255710`; the app displayed the game and item names in the CLI metadata output. A subsequent Don't Starve Together download saved 51 files / 610,208 bytes with all SHA-256 hashes matching, showing that the previous failure did not contaminate the successful attempt. The diagnostic contains only the version, platform, anonymous mode, typed reason and item/game IDs.
+
+These automated checks exercise the shared backend. They do not constitute a screenshot review of the native GUI or an in-game compatibility test. The dependencies notice links to the Workshop page; it does not detect or install dependencies.
+
 ## Code signing
 
 Windows releases are intentionally unsigned. Purchasing a signing certificate is not planned. Download from this repository's Releases and verify the published SHA-256 checksums. Windows may show an unknown-publisher warning.

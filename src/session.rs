@@ -1,5 +1,5 @@
 use crate::i18n::{Language, Text};
-use crate::model::{Download, Event, Stage};
+use crate::model::{Download, Event, Failure, Stage};
 use std::{path::Path, time::Instant};
 
 #[derive(Default)]
@@ -13,7 +13,7 @@ pub enum Session {
         cancelling: bool,
     },
     Saved(Download),
-    Failed(Text),
+    Failed(Failure),
     Cancelled,
 }
 
@@ -52,7 +52,7 @@ impl Session {
 
     pub fn error(&self, language: Language) -> Option<&'static str> {
         match self {
-            Self::Failed(message) => Some(language.text(*message)),
+            Self::Failed(failure) => Some(language.text(failure.kind)),
             _ => None,
         }
     }
@@ -102,7 +102,7 @@ impl Session {
                     *progress = (total > 0).then_some((done.min(total), total));
                 }
             }
-            Event::Metadata(_, _) => {}
+            Event::Metadata(_) => {}
             Event::Complete(done) => {
                 *self = Self::Saved(done.clone());
                 return Some(done);
@@ -133,7 +133,7 @@ mod tests {
         assert_eq!(session.progress(), Some(0.5));
         session.apply(Event::Stage(Stage::Downloading));
         assert_eq!(session.progress(), None);
-        session.apply(Event::Failed(Text::Interrupted));
+        session.apply(Event::Failed(Failure::new(Text::Interrupted, None, None)));
         session.apply(Event::Progress {
             done: 100,
             total: 100,

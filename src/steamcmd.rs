@@ -80,6 +80,8 @@ pub fn download(
     log_path: &Path,
     cancel: &AtomicBool,
 ) -> Result<()> {
+    let evidence = crate::diagnostics::SteamLog::snapshot(cache);
+    let mut output_reason = None;
     let mut log = File::create(log_path)?;
     let job = Job::new().context(Text::PrepareFailed)?;
     let child = Command::new(exe)
@@ -138,6 +140,9 @@ pub fn download(
             Ok(line) => {
                 writeln!(log, "{line}")?;
                 confirmed |= confirms(&line, id);
+                if let Some(reason) = crate::diagnostics::steam_reason(&line) {
+                    output_reason = Some(reason);
+                }
             }
             Err(mpsc::RecvTimeoutError::Disconnected) => break,
             Err(mpsc::RecvTimeoutError::Timeout) => {}
@@ -147,7 +152,12 @@ pub fn download(
         let _ = process.child.try_wait()?;
     }
     if !confirmed {
-        bail!(Text::AnonymousDenied);
+        bail!(
+            evidence
+                .reason(app_id)
+                .or(output_reason)
+                .unwrap_or(Text::DownloadFailed)
+        );
     }
     Ok(())
 }

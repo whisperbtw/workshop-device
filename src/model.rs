@@ -6,6 +6,8 @@ pub struct Download {
     pub id: u64,
     #[serde(default)]
     pub app_id: u32,
+    #[serde(default)]
+    pub game: String,
     pub title: String,
     pub folder: PathBuf,
     pub bytes: u64,
@@ -43,12 +45,35 @@ impl Stage {
     }
 }
 
+#[derive(Clone, Debug)]
+pub struct ItemInfo {
+    pub app_id: u32,
+    pub game: String,
+    pub title: String,
+    pub bytes: u64,
+}
+
+#[derive(Clone, Debug)]
+pub struct Failure {
+    pub kind: crate::i18n::Text,
+    pub diagnostic: String,
+}
+
+impl Failure {
+    pub fn new(kind: crate::i18n::Text, item_id: Option<u64>, app_id: Option<u32>) -> Self {
+        Self {
+            kind,
+            diagnostic: crate::diagnostics::report(kind, item_id, app_id),
+        }
+    }
+}
+
 pub enum Event {
     Stage(Stage),
     Progress { done: u64, total: u64 },
-    Metadata(String, u64),
+    Metadata(ItemInfo),
     Complete(Download),
-    Failed(crate::i18n::Text),
+    Failed(Failure),
     Cancelled,
 }
 

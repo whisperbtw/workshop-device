@@ -1,19 +1,20 @@
-# Workshop Device 1.1.0
+# Workshop Device 1.2.0
 
-Download individual Steam Workshop items to a folder you choose, across games that allow anonymous SteamCMD access.
+The device display now shows the detected game and item name, explains download failures more precisely, and offers a diagnostic you can copy for support.
 
-- Automatically detects the game from Steam metadata. Removes the former single-game restriction.
-- Generic Workshop link labels and placeholders; new installations save to Downloads\Workshop by default.
-- Upgrades migrate the old default destination while preserving custom folders, preferences and cached downloads.
-- Website and English, Portuguese and Japanese guides now explain what the app downloads, how files are saved and the access limitations.
-- Installer, portable archive and standalone Windows x64 executable are included. Contributions are welcome; see CONTRIBUTING.md.
+- Distinguishes missing Steam depot keys, access restrictions, connection failures, unavailable items and file-saving errors when evidence is available. Generic SteamCMD failures are reported without inventing a cause.
+- Uses only new SteamCMD log entries for the requested game, preventing old failures from contaminating the current diagnosis.
+- **Copy diagnostic** includes the app version, error category and available Workshop/game IDs, without personal paths or raw logs.
+- **Dependencies not included** opens the item's Workshop page to check requirements and the author's instructions.
+- Game-name lookup is optional: downloads still work if the Steam Store cannot provide a name; the Steam app ID is shown instead.
+- Keeps the device dimensions and physical button sizes. Existing preferences and download history are preserved.
 
-Collections and items requiring Steam login are unsupported. Downloading saves files; installation and activation remain your responsibility. The app respects SteamCMD access decisions. It is a community project, not a Valve-approved product. Follow Steam terms and each item's license. This release is unsigned.
+Windows x64 installer, portable archive and standalone executable are included. The app uses anonymous SteamCMD access; login-required items and collections remain unsupported. Dependencies are not automatically downloaded. Releases are intentionally unsigned. Contributions welcome: see CONTRIBUTING.md.
 
 ## Português
 
-Baixe itens individuais do Steam Workshop de diferentes jogos para a pasta escolhida. O jogo é identificado automaticamente. Novo destino inicial Downloads\Workshop, textos genéricos e documentação revisada. Coleções e itens que exigem login não são suportados. Contribuições são bem-vindas.
+O visor mostra o jogo e o item, diferencia as causas de erro confirmadas e permite copiar um diagnóstico sem caminhos pessoais. O aviso de dependências abre a página do item no Workshop. Mantém o tamanho do dispositivo e dos controles. Downloads que exigem login continuam sem suporte; dependências não são baixadas automaticamente.
 
 ## 日本語
 
-各ゲームの個別 Steam Workshop アイテムを指定したフォルダーへ保存します。ゲームを自動判別し、初期保存先を Downloads\Workshop に変更。サイトとガイドを更新しました。コレクションとログイン必須のアイテムには対応しません。貢献を歓迎します。
+画面にゲーム名とアイテム名を表示し、確認できた原因に応じてエラーを分類します。個人のパスを含まない診断情報をコピーできます。依存アイテムの注意から Workshop ページを開けます。機器とボタンのサイズは維持。ログイン必須のダウンロードには対応せず、依存アイテムは自動ダウンロードされません。

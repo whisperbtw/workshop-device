@@ -14,9 +14,9 @@ A imagem acima é a arte do aplicativo, não uma captura de tela.
 
 Requer Windows 10/11 x64, internet e um driver gráfico compatível com o renderizador do GPUI.
 
-- **Instalador:** baixe `Workshop-Device-Setup-1.1.0.exe` na seção Releases. Instala para o seu usuário, cria um atalho no menu Iniciar, oferece um atalho opcional na área de trabalho e inclui desinstalador. Não exige administrador.
-- **Portátil:** extraia `Workshop-Device-1.1.0-windows-x64.zip` e abra `Workshop-Device.exe`. Mantenha os avisos de licença incluídos.
-- `SHA256SUMS.txt` contém os hashes dos arquivos. Confira com `Get-FileHash .\Workshop-Device-Setup-1.1.0.exe -Algorithm SHA256`.
+- **Instalador:** baixe `Workshop-Device-Setup-1.2.0.exe` na seção Releases. Instala para o seu usuário, cria um atalho no menu Iniciar, oferece um atalho opcional na área de trabalho e inclui desinstalador. Não exige administrador.
+- **Portátil:** extraia `Workshop-Device-1.2.0-windows-x64.zip` e abra `Workshop-Device.exe`. Mantenha os avisos de licença incluídos.
+- `SHA256SUMS.txt` contém os hashes dos arquivos. Confira com `Get-FileHash .\Workshop-Device-Setup-1.2.0.exe -Algorithm SHA256`.
 
 O aplicativo é distribuído sem assinatura digital; não há previsão de contratar um certificado. O Windows pode mostrar um aviso de publicador desconhecido. Baixe apenas das Releases deste repositório.
 
@@ -31,6 +31,10 @@ O aplicativo é distribuído sem assinatura digital; não há previsão de contr
 O SteamCMD oficial é baixado e preparado automaticamente no primeiro uso. O destino inicial é a pasta Downloads do Windows com a subpasta `Workshop`; você pode escolher qualquer pasta onde tenha permissão para salvar. Cada download concluído fica em uma nova subpasta `<id-do-workshop>-<timestamp>`. Downloads anteriores não são sobrescritos.
 
 Arraste a alça superior para mover a janela. Os controles gravados **−** e **×** minimizam e fecham o app. Durante o download, o controle principal vira **PARAR**. Fechar o app encerra seu processo SteamCMD.
+
+Depois de identificar o item, o visor mostra o **nome do jogo e do item**. O link **Dependências não incluídas** abre a página no Workshop para você conferir os itens exigidos e as instruções de instalação; eles não são baixados automaticamente.
+
+Os erros diferenciam falta de chave de acesso, acesso negado, problemas de conexão, item indisponível e falha ao salvar quando há evidência. Falhas sem causa informada pelo SteamCMD continuam identificadas como desconhecidas. **Copiar diagnóstico** copia a versão do app, a categoria do erro e os IDs disponíveis do item e do jogo para relatar problemas. Não inclui caminhos pessoais nem logs completos da Steam.
 
 ## O que pode ser baixado
 

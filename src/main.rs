@@ -4,6 +4,7 @@ mod assets;
 mod backend;
 mod buttons;
 mod device;
+mod diagnostics;
 mod i18n;
 mod install;
 mod model;
@@ -89,12 +90,17 @@ fn cli_download(args: &[String]) -> anyhow::Result<()> {
         match event {
             model::Event::Stage(stage) => println!("{}", stage.label()),
             model::Event::Progress { done, total } => println!("{done}/{total} bytes"),
-            model::Event::Metadata(title, size) => println!("{title} ({size} bytes)"),
+            model::Event::Metadata(item) => {
+                println!("{} · {} ({} bytes)", item.game, item.title, item.bytes)
+            }
             model::Event::Complete(done) => {
                 println!("SALVO: {} ({} bytes)", done.folder.display(), done.bytes);
                 return Ok(());
             }
-            model::Event::Failed(error) => anyhow::bail!(i18n::Language::System.text(error)),
+            model::Event::Failed(failure) => {
+                eprintln!("{}", failure.diagnostic);
+                anyhow::bail!(i18n::Language::System.text(failure.kind));
+            }
             model::Event::Cancelled => anyhow::bail!("Download cancelado."),
         }
     }

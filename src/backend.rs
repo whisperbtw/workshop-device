@@ -1,5 +1,5 @@
 use crate::i18n::Text;
-use crate::model::{Download, Event, Settings, Stage};
+use crate::model::{Download, Event, Failure, ItemInfo, Settings, Stage};
 use anyhow::{Context, Result, ensure};
 use reqwest::blocking::Client;
 use std::{
@@ -117,20 +117,14 @@ fn cancelled(cancel: &AtomicBool) -> Result<()> {
 
 fn client() -> Result<Client> {
     Ok(Client::builder()
-        .user_agent("WorkshopDevice/1.1")
+        .user_agent("WorkshopDevice/1.2")
         .connect_timeout(Duration::from_secs(15))
         .timeout(Duration::from_secs(90))
         .redirect(reqwest::redirect::Policy::none())
         .build()?)
 }
 
-struct WorkshopItem {
-    app_id: u32,
-    title: String,
-    size: u64,
-}
-
-fn metadata(client: &Client, id: u64) -> Result<WorkshopItem> {
+fn metadata(client: &Client, id: u64) -> Result<ItemInfo> {
     let json: serde_json::Value = client
         .post("https://api.steampowered.com/ISteamRemoteStorage/GetPublishedFileDetails/v1/")
         .form(&[
@@ -140,10 +134,38 @@ fn metadata(client: &Client, id: u64) -> Result<WorkshopItem> {
         .send()?
         .error_for_status()?
         .json()?;
-    parse_metadata(&json, id)
+    let mut item = parse_metadata(&json, id)?;
+    if let Some(name) = game_name(client, item.app_id) {
+        item.game = name;
+    }
+    Ok(item)
 }
 
-fn parse_metadata(json: &serde_json::Value, id: u64) -> Result<WorkshopItem> {
+fn game_name(client: &Client, app_id: u32) -> Option<String> {
+    // Optional display metadata must never prevent a permitted download.
+    let mut response = client
+        .get("https://store.steampowered.com/api/appdetails")
+        .query(&[("appids", app_id.to_string()), ("filters", "basic".into())])
+        .timeout(Duration::from_secs(8))
+        .send()
+        .ok()?
+        .error_for_status()
+        .ok()?;
+    let mut bytes = Vec::new();
+    (&mut response)
+        .take(512 * 1024 + 1)
+        .read_to_end(&mut bytes)
+        .ok()?;
+    if bytes.len() > 512 * 1024 {
+        return None;
+    }
+    let json: serde_json::Value = serde_json::from_slice(&bytes).ok()?;
+    let name = json[app_id.to_string()]["data"]["name"].as_str()?;
+    let name: String = name.chars().filter(|c| !c.is_control()).take(160).collect();
+    (!name.trim().is_empty()).then_some(name)
+}
+
+fn parse_metadata(json: &serde_json::Value, id: u64) -> Result<ItemInfo> {
     let detail = &json["response"]["publishedfiledetails"][0];
     ensure!(detail["result"].as_u64() == Some(1), Text::UnavailableItem);
     ensure!(
@@ -164,13 +186,17 @@ fn parse_metadata(json: &serde_json::Value, id: u64) -> Result<WorkshopItem> {
         .as_u64()
         .or_else(|| detail["file_size"].as_str().and_then(|n| n.parse().ok()))
         .unwrap_or(0);
-    Ok(WorkshopItem {
+    Ok(ItemInfo {
         app_id,
+        game: format!("Steam app {app_id}"),
         title: detail["title"]
             .as_str()
             .unwrap_or("Workshop item")
-            .to_string(),
-        size,
+            .chars()
+            .filter(|c| !c.is_control())
+            .take(256)
+            .collect(),
+        bytes: size,
     })
 }
 
@@ -224,6 +250,7 @@ fn run_download(
     destination: &Path,
     tx: &Sender<Event>,
     cancel: &AtomicBool,
+    detected_app: &mut Option<u32>,
 ) -> Result<Download> {
     ensure!(destination.is_absolute(), Text::AbsoluteFolder);
     fs::create_dir_all(runtime())?;
@@ -238,7 +265,8 @@ fn run_download(
     let client = client()?;
     let _ = tx.send(Event::Stage(Stage::Lookup));
     let item = metadata(&client, id)?;
-    let _ = tx.send(Event::Metadata(item.title.clone(), item.size));
+    *detected_app = Some(item.app_id);
+    let _ = tx.send(Event::Metadata(item.clone()));
     cancelled(cancel)?;
     let steam = runtime().join("steamcmd");
     let exe = bootstrap(&client, &steam, tx, cancel).context(Text::PrepareFailed)?;
@@ -259,6 +287,7 @@ fn run_download(
     let result = Download {
         id,
         app_id: item.app_id,
+        game: item.game,
         title: item.title,
         folder,
         bytes,
@@ -278,13 +307,18 @@ fn run_download(
 
 pub fn start(id: u64, destination: PathBuf, tx: Sender<Event>, cancel: Arc<AtomicBool>) {
     thread::spawn(move || {
-        let result = run_download(id, &destination, &tx, &cancel);
+        let mut detected_app = None;
+        let result = run_download(id, &destination, &tx, &cancel, &mut detected_app);
         let event = match result {
             Ok(done) => Event::Complete(done),
             Err(_) if cancel.load(Ordering::Relaxed) => Event::Cancelled,
             Err(err) => {
                 let _ = fs::write(runtime().join("last-error.log"), format!("{err:#}"));
-                Event::Failed(crate::i18n::error_key(&err))
+                Event::Failed(Failure::new(
+                    crate::i18n::error_key(&err),
+                    Some(id),
+                    detected_app,
+                ))
             }
         };
         let _ = tx.send(event);
@@ -306,7 +340,7 @@ mod tests {
         for app_id in [108600, 294100, 4000] {
             let item = parse_metadata(&detail(app_id.into()), 123).unwrap();
             assert_eq!(item.app_id, app_id);
-            assert_eq!(item.size, 42);
+            assert_eq!(item.bytes, 42);
         }
         for invalid in [
             serde_json::json!(0),

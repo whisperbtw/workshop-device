@@ -1,6 +1,6 @@
 use crate::backend;
 use crate::i18n::{Language, Text};
-use crate::model::Settings;
+use crate::model::{Event, Failure, ItemInfo, Settings};
 use crate::session::Session;
 use crate::{
     buttons::{Buttons, Kind},
@@ -43,6 +43,9 @@ pub struct Downloader {
     buttons: Buttons,
     screen: Screen,
     preferences_error: Option<Text>,
+    item: Option<ItemInfo>,
+    item_id: Option<u64>,
+    diagnostic_copied: bool,
 }
 
 impl Drop for Downloader {
@@ -83,6 +86,9 @@ impl Downloader {
             buttons: Buttons::new(cx),
             screen: Screen::Download,
             preferences_error,
+            item: None,
+            item_id: None,
+            diagnostic_copied: false,
         }
     }
 
@@ -99,17 +105,22 @@ impl Downloader {
             cx.notify();
             return;
         }
+        self.item = None;
+        self.item_id = None;
+        self.diagnostic_copied = false;
         let id = match backend::parse_id(self.link.read(cx).value().as_ref()) {
             Ok(id) => id,
             Err(error) => {
-                self.session = Session::Failed(crate::i18n::error_key(&error));
+                self.session =
+                    Session::Failed(Failure::new(crate::i18n::error_key(&error), None, None));
                 cx.notify();
                 return;
             }
         };
+        self.item_id = Some(id);
         let destination = self.destination.read(cx).value().to_string();
         if !PathBuf::from(&destination).is_absolute() {
-            self.session = Session::Failed(Text::AbsoluteFolder);
+            self.session = Session::Failed(Failure::new(Text::AbsoluteFolder, Some(id), None));
             cx.notify();
             return;
         }
@@ -134,6 +145,11 @@ impl Downloader {
                 };
                 let done = view.update(cx, |this, cx| {
                     for event in events {
+                        if this.session.is_busy()
+                            && let Event::Metadata(item) = &event
+                        {
+                            this.item = Some(item.clone());
+                        }
                         if let Some(done) = this.session.apply(event) {
                             if this.settings.auto_open_folder {
                                 open_folder(&done.folder);
@@ -144,7 +160,11 @@ impl Downloader {
                         }
                     }
                     if disconnected && this.session.is_busy() {
-                        this.session = Session::Failed(Text::Interrupted);
+                        this.session = Session::Failed(Failure::new(
+                            Text::Interrupted,
+                            this.item_id,
+                            this.item.as_ref().map(|i| i.app_id),
+                        ));
                     }
                     cx.notify();
                     !this.session.is_busy()
@@ -321,21 +341,21 @@ impl Render for Downloader {
             div()
                 .flex()
                 .flex_col()
-                .gap(px(16.))
+                .gap(px(8.))
                 .w_full()
                 .h_full()
                 .child(
                     div()
                         .flex()
                         .flex_col()
-                        .gap(px(12.))
+                        .gap(px(6.))
                         .child(caption(lang.text(Text::Link)))
                         .child(
                             Input::new(&self.link)
                                 .appearance(false)
                                 .bordered(false)
                                 .disabled(self.session.is_busy())
-                                .h(px(46.))
+                                .h(px(38.))
                                 .text_size(px(12.))
                                 .text_color(rgb(TEXT))
                                 .font_family("Segoe UI"),
@@ -346,7 +366,7 @@ impl Render for Downloader {
                     div()
                         .flex()
                         .flex_col()
-                        .gap(px(12.))
+                        .gap(px(6.))
                         .child(caption(lang.text(Text::Destination)))
                         .child(
                             div()
@@ -359,7 +379,7 @@ impl Render for Downloader {
                                             .appearance(false)
                                             .bordered(false)
                                             .disabled(self.session.is_busy())
-                                            .h(px(46.))
+                                            .h(px(38.))
                                             .text_size(px(12.))
                                             .text_color(rgb(TEXT))
                                             .font_family("Segoe UI"),
@@ -383,6 +403,19 @@ impl Render for Downloader {
                         )
                         .child(div().h(px(1.)).bg(rgb(0x343633))),
                 )
+                .when_some(self.item.as_ref(), |el, item| {
+                    el.child(div().w_full().min_w(px(0.)).flex_shrink_0().flex().flex_col().gap(px(2.))
+                        .child(caption(item.game.clone()).truncate())
+                        .child(div().text_size(px(11.)).truncate().child(item.title.clone()))
+                        .child(Button::new("dependencies").label(lang.text(Text::Dependencies))
+                            .ghost().compact().h(px(22.)).text_size(px(10.))
+                            .tooltip(lang.text(Text::DependenciesDetail))
+                            .on_click(cx.listener(|this, _, _, cx| {
+                                if let Some(id) = this.item_id {
+                                    cx.open_url(&format!("https://steamcommunity.com/sharedfiles/filedetails/?id={id}"));
+                                }
+                            }))))
+                })
                 .when_some(
                     self.session
                         .error(self.settings.language)
@@ -392,7 +425,7 @@ impl Render for Downloader {
                             div()
                                 .id("screen-error")
                                 .w_full()
-                                .max_h(px(64.))
+                                .max_h(px(42.))
                                 .flex_shrink_0()
                                 .overflow_y_scroll()
                                 .text_size(px(11.))
@@ -402,6 +435,18 @@ impl Render for Downloader {
                         )
                     },
                 )
+                .when(matches!(self.session, Session::Failed(_)), |el| {
+                    el.child(Button::new("copy-diagnostic")
+                        .label(lang.text(if self.diagnostic_copied { Text::DiagnosticCopied } else { Text::CopyDiagnostic }))
+                        .ghost().compact().h(px(20.)).text_size(px(10.))
+                        .on_click(cx.listener(|this, _, _, cx| {
+                            if let Session::Failed(failure) = &this.session {
+                                cx.write_to_clipboard(ClipboardItem::new_string(failure.diagnostic.clone()));
+                                this.diagnostic_copied = true;
+                                cx.notify();
+                            }
+                        })))
+                })
                 .child(div().flex_1())
                 .when_some(self.session.progress(), |el, fraction| {
                     el.child(
