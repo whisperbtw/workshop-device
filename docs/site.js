@@ -39,7 +39,9 @@ const translations = {
 const root = 'https://github.com/whisperbtw/workshop-device';
 const language = document.getElementById('language');
 function setLanguage(value) {
-  const strings = translations[value] || translations.en;
+  value = Object.hasOwn(translations, value) ? value : 'en';
+  language.value = value;
+  const strings = translations[value];
   document.documentElement.lang = value === 'pt' ? 'pt-BR' : value;
   document.querySelectorAll('[data-t]').forEach(element => {
     element.textContent = strings[element.dataset.t];
@@ -47,5 +49,16 @@ function setLanguage(value) {
   document.getElementById('readme').href = value === 'en' ? root + '#readme' : root + '/blob/main/docs/README.' + (value === 'pt' ? 'pt-BR' : 'ja') + '.md';
   document.getElementById('contributing').href = root + '/blob/main/' + (value === 'en' ? 'CONTRIBUTING.md' : 'docs/CONTRIBUTING.' + (value === 'pt' ? 'pt-BR' : 'ja') + '.md');
 }
-language.addEventListener('change', () => setLanguage(language.value));
-setLanguage('en');
+function initialLanguage() {
+  try {
+    const saved = localStorage.getItem('workshop-device-language');
+    if (Object.hasOwn(translations, saved)) return saved;
+  } catch { /* Automatic detection still works when browser storage is unavailable. */ }
+  const locale = (navigator.languages?.[0] || navigator.language || 'en').split('-')[0].toLowerCase();
+  return Object.hasOwn(translations, locale) ? locale : 'en';
+}
+language.addEventListener('change', () => {
+  setLanguage(language.value);
+  try { localStorage.setItem('workshop-device-language', language.value); } catch { /* Keep the selection for this visit. */ }
+});
+setLanguage(initialLanguage());
