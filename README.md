@@ -18,7 +18,7 @@ Requires Windows 10/11 x64, internet access and a graphics driver compatible wit
 - **Portable:** extract `Workshop-Device-1.1.0-windows-x64.zip` and open `Workshop-Device.exe`. Keep the included license notices with it.
 - `SHA256SUMS.txt` lists the SHA-256 hashes of the release files. Compare with `Get-FileHash .\Workshop-Device-Setup-1.1.0.exe -Algorithm SHA256`.
 
-The initial release is not code-signed. Windows may show an unknown-publisher warning. Download only from this repository's Releases.
+The application is intentionally unsigned; code signing is not planned. Windows may show an unknown-publisher warning. Download only from this repository's Releases.
 
 ## Use
 
@@ -40,6 +40,8 @@ Drag the top grip to move the window. The engraved **−** and **×** controls m
 - Some Workshop items require account ownership or authentication. This release has no Steam login flow and cannot download those items.
 - Downloads do not install or activate an item in the game. Use the item author’s installation instructions and check compatibility with your game version.
 - The application respects the access that SteamCMD provides; it does not bypass restricted content.
+
+See [the tested items and download results](docs/COMPATIBILITY.md). Compatibility depends on each item and Steam access.
 
 ## Files, privacy and troubleshooting
 

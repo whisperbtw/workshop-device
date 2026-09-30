@@ -18,7 +18,7 @@ Requer Windows 10/11 x64, internet e um driver gráfico compatível com o render
 - **Portátil:** extraia `Workshop-Device-1.1.0-windows-x64.zip` e abra `Workshop-Device.exe`. Mantenha os avisos de licença incluídos.
 - `SHA256SUMS.txt` contém os hashes dos arquivos. Confira com `Get-FileHash .\Workshop-Device-Setup-1.1.0.exe -Algorithm SHA256`.
 
-A primeira versão não tem assinatura digital. O Windows pode mostrar um aviso de publicador desconhecido. Baixe apenas das Releases deste repositório.
+O aplicativo é distribuído sem assinatura digital; não há previsão de contratar um certificado. O Windows pode mostrar um aviso de publicador desconhecido. Baixe apenas das Releases deste repositório.
 
 ## Como usar
 
@@ -40,6 +40,8 @@ Arraste a alça superior para mover a janela. Os controles gravados **−** e **
 - Alguns itens exigem autenticação ou acesso pela conta Steam. Esta versão não tem login na Steam e não baixa esses itens.
 - O download não instala nem ativa o item no jogo. Siga as instruções do autor e confira a compatibilidade com a sua versão.
 - O app usa o acesso permitido pelo SteamCMD e não contorna restrições.
+
+Consulte [os itens testados e os resultados](COMPATIBILITY.md). A compatibilidade depende de cada item e do acesso pela Steam.
 
 ## Arquivos, privacidade e problemas
 

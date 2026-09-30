@@ -35,7 +35,7 @@ try {
         Copy-Item -LiteralPath (Join-Path $projectRoot $name) -Destination $stage
     }
     New-Item -ItemType Directory -Path (Join-Path $stage 'docs'),(Join-Path $stage 'assets') | Out-Null
-    foreach ($name in @('README.pt-BR.md','README.ja.md','CONTRIBUTING.pt-BR.md','CONTRIBUTING.ja.md','DEPENDENCIES.md')) {
+    foreach ($name in @('README.pt-BR.md','README.ja.md','CONTRIBUTING.pt-BR.md','CONTRIBUTING.ja.md','DEPENDENCIES.md','COMPATIBILITY.md')) {
         Copy-Item -LiteralPath (Join-Path $projectRoot "docs/$name") -Destination (Join-Path $stage 'docs')
     }
     Copy-Item -LiteralPath (Join-Path $projectRoot 'assets/app-icon.png'),(Join-Path $projectRoot 'assets/IMAGE.md') -Destination (Join-Path $stage 'assets')
