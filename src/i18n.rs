@@ -71,12 +71,12 @@ pub enum Text {
     LinkTooLong,
     InvalidLink,
     SteamLink,
-    IndividualMod,
+    IndividualItem,
     SingleId,
     InvalidId,
     AbsoluteFolder,
     UnavailableItem,
-    WrongGame,
+    MissingGame,
     Collection,
     CancelledError,
     BadPackage,
@@ -104,12 +104,12 @@ impl Text {
     fn translations(self) -> (&'static str, &'static str, &'static str) {
         use Text::*;
         match self {
-            Link => ("LINK DO MOD", "MOD LINK", "MODリンク"),
+            Link => ("LINK DO WORKSHOP", "WORKSHOP LINK", "Workshopリンク"),
             Destination => ("SALVAR EM", "SAVE TO", "保存先"),
             PasteLink => (
-                "Cole o link do mod",
-                "Paste the mod link",
-                "MODのリンクを貼り付け",
+                "Cole um link do Steam Workshop",
+                "Paste a Steam Workshop link",
+                "Workshopのリンクを貼り付け",
             ),
             Download => ("BAIXAR", "DOWNLOAD", "ダウンロード"),
             Stop => ("PARAR", "STOP", "停止"),
@@ -126,7 +126,11 @@ impl Text {
                 "CHECK AND TRY AGAIN",
                 "確認して再試行してください",
             ),
-            Lookup => ("CONSULTANDO O MOD", "CHECKING THE MOD", "MODを確認中"),
+            Lookup => (
+                "CONSULTANDO O ITEM",
+                "CHECKING THE ITEM",
+                "アイテムを確認中",
+            ),
             Preparing => (
                 "PREPARANDO O DOWNLOAD",
                 "PREPARING DOWNLOAD",
@@ -175,20 +179,20 @@ impl Text {
                 "Use an HTTPS link from steamcommunity.com.",
                 "steamcommunity.comのHTTPSリンクを使用してください。",
             ),
-            IndividualMod => (
-                "Abra a página de um mod individual no Workshop e copie o link.",
-                "Open an individual mod's Workshop page and copy its link.",
-                "Workshopで個別のMODページを開き、リンクをコピーしてください。",
+            IndividualItem => (
+                "Abra a página de um item individual no Workshop e copie o link.",
+                "Open an individual item's Workshop page and copy its link.",
+                "Workshopで個別のアイテムページを開き、リンクをコピーしてください。",
             ),
             SingleId => (
-                "O link deve conter um único ID do mod.",
-                "The link must contain exactly one mod ID.",
-                "リンクにはMODのIDを1つだけ含めてください。",
+                "O link deve conter um único ID do item.",
+                "The link must contain exactly one item ID.",
+                "リンクにはアイテムのIDを1つだけ含めてください。",
             ),
             InvalidId => (
-                "ID do mod inválido.",
-                "Invalid mod ID.",
-                "MODのIDが無効です。",
+                "ID do item inválido.",
+                "Invalid item ID.",
+                "アイテムのIDが無効です。",
             ),
             AbsoluteFolder => (
                 "Escolha uma pasta com caminho completo usando o botão ao lado.",
@@ -196,19 +200,19 @@ impl Text {
                 "横のボタンで保存先フォルダーを選択してください。",
             ),
             UnavailableItem => (
-                "A Steam não disponibilizou esse item. Confira se o mod é público e o link está correto.",
-                "Steam did not provide this item. Check that the mod is public and the link is correct.",
-                "Steamからこのアイテムを取得できません。MODが公開されているか、リンクが正しいか確認してください。",
+                "A Steam não disponibilizou esse item. Confira se o item é público e o link está correto.",
+                "Steam did not provide this item. Check that the item is public and the link is correct.",
+                "Steamからこのアイテムを取得できません。アイテムが公開されているか、リンクが正しいか確認してください。",
             ),
-            WrongGame => (
-                "Esse mod não pertence ao Project Zomboid.",
-                "This mod is not for Project Zomboid.",
-                "このMODはProject Zomboid用ではありません。",
+            MissingGame => (
+                "Não foi possível identificar o jogo deste item.",
+                "Could not identify this item’s game.",
+                "このアイテムのゲームを特定できませんでした。",
             ),
             Collection => (
-                "Esse link é de uma coleção. Cole o link de um mod individual.",
-                "This is a collection link. Paste an individual mod's link.",
-                "これはコレクションのリンクです。個別のMODのリンクを入力してください。",
+                "Esse link é de uma coleção. Cole o link de um item individual.",
+                "This is a collection link. Paste an individual item's link.",
+                "これはコレクションのリンクです。個別のアイテムのリンクを入力してください。",
             ),
             CancelledError => (
                 "Download cancelado.",
@@ -221,9 +225,9 @@ impl Text {
                 "SteamCMDのパッケージが想定より大きすぎます。再試行してください。",
             ),
             UnsupportedLinks => (
-                "O mod contém um atalho ou ponto de redirecionamento não suportado.",
-                "The mod contains an unsupported link or reparse point.",
-                "このMODには未対応のリンクまたは再解析ポイントが含まれています。",
+                "O item contém um atalho ou ponto de redirecionamento não suportado.",
+                "The item contains an unsupported link or reparse point.",
+                "このアイテムには未対応のリンクまたは再解析ポイントが含まれています。",
             ),
             PrepareFailed => (
                 "Não foi possível preparar o download. Tente novamente.",
@@ -256,9 +260,9 @@ impl Text {
                 "ダウンロードが30分を超えました。接続を確認して再試行してください。",
             ),
             AnonymousDenied => (
-                "A Steam não liberou este download. Confira se o mod é público. Ele pode exigir uma conta que tenha acesso ao jogo.",
-                "Steam did not allow this download. Check that the mod is public. It may require an account with access to the game.",
-                "Steamがこのダウンロードを許可しませんでした。MODが公開されているか確認してください。ゲームを所有するアカウントが必要な場合があります。",
+                "A Steam não liberou este download. Confira se o item é público. Ele pode exigir uma conta que tenha acesso ao jogo.",
+                "Steam did not allow this download. Check that the item is public. It may require an account with access to the game.",
+                "Steamがこのダウンロードを許可しませんでした。アイテムが公開されているか確認してください。ゲームを所有するアカウントが必要な場合があります。",
             ),
             EmptyFolder => (
                 "A Steam devolveu uma pasta vazia.",
@@ -358,8 +362,8 @@ mod tests {
         let error = anyhow::Error::new(Text::Collection).context(Text::PrepareFailed);
         assert_eq!(error_key(&error), Text::PrepareFailed);
         assert_eq!(
-            Language::Japanese.text(Text::WrongGame),
-            "このMODはProject Zomboid用ではありません。"
+            Language::Japanese.text(Text::MissingGame),
+            "このアイテムのゲームを特定できませんでした。"
         );
     }
 }

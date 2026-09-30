@@ -75,6 +75,7 @@ fn confirms(line: &str, id: u64) -> bool {
 pub fn download(
     exe: &Path,
     cache: &Path,
+    app_id: u32,
     id: u64,
     log_path: &Path,
     cancel: &AtomicBool,
@@ -88,7 +89,7 @@ pub fn download(
             "+login",
             "anonymous",
             "+workshop_download_item",
-            &crate::model::APP_ID.to_string(),
+            &app_id.to_string(),
             &id.to_string(),
             "validate",
             "+quit",

@@ -3,9 +3,9 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <meta name="description" content="Workshop Device: a minimal native Windows downloader for Project Zomboid Workshop mods. Open source, built with Rust and GPUI.">
+  <meta name="description" content="Download mods, maps and other Steam Workshop items to a folder you choose. Automatic game detection, status and cancellation.">
   <meta name="theme-color" content="#181819">
-  <title>Workshop Device — mod downloads, simply</title>
+  <title>Workshop Device — Steam Workshop downloads</title>
   <link rel="icon" type="image/png" href="app-icon.png">
   <style>
     :root{color-scheme:dark;font-family:system-ui,-apple-system,"Segoe UI",sans-serif;background:#181819;color:#e7e6df}
@@ -31,8 +31,8 @@
     <header><a class="brand" href="./"><span class="dot"></span>WORKSHOP DEVICE</a><label><span class="small" data-t="language">Language</span> <select id="language" aria-label="Language"><option value="en">English</option><option value="pt">Português</option><option value="ja">日本語</option></select></label></header>
     <main>
       <section class="hero">
-        <div><span class="eyebrow" data-t="eyebrow">WINDOWS · RUST · GPUI</span><h1 data-t="title">Your mods.<br>In your folder.</h1>
-          <p data-t="intro">Paste a Project Zomboid Workshop link, choose a destination and press download. A small native app that feels like a device.</p>
+        <div><span class="eyebrow" data-t="eyebrow">STEAM WORKSHOP · WINDOWS</span><h1 data-t="title">Download Workshop files to your folder.</h1>
+          <p data-t="intro">Download mods, maps and other Steam Workshop items. Paste the item link, choose where to save it and press Download. The app detects the game automatically.</p>
           <a class="button" href="https://github.com/whisperbtw/workshop-device/releases/latest"><span data-t="download">Download for Windows</span><span aria-hidden="true">↓</span></a>
           <div class="small" data-t="version">Installer + portable · Windows 10/11 x64</div>
           <div class="links"><a id="readme" href="https://github.com/whisperbtw/workshop-device#readme" data-t="readme">Read the guide</a><a href="https://github.com/whisperbtw/workshop-device" data-t="source">Source code</a></div>
@@ -40,14 +40,14 @@
         <img src="app-icon.png" width="340" height="340" alt="Workshop Device application artwork — a black download appliance" fetchpriority="high">
       </section>
       <section class="features" aria-label="Features">
-        <div><span class="number">01</span><h2 data-t="one">One link. One folder.</h2><p data-t="oneText">Official SteamCMD, prepared automatically. Each completed mod gets its own folder.</p></div>
-        <div><span class="number">02</span><h2 data-t="two">A native little device.</h2><p data-t="twoText">Rounded edges, physical button animation and status inside the display. Built in Rust with GPUI.</p></div>
-        <div><span class="number">03</span><h2 data-t="three">In your language.</h2><p data-t="threeText">English, Portuguese and Japanese. The first launch detects your Windows language.</p></div>
+        <div><span class="number">01</span><h2 data-t="one">Paste a Workshop link.</h2><p data-t="oneText">The game is identified from Steam metadata. Official SteamCMD is prepared automatically; no terminal commands needed.</p></div>
+        <div><span class="number">02</span><h2 data-t="two">Choose the destination.</h2><p data-t="twoText">Save files where you want them. Each completed item gets a new folder, without overwriting previous downloads.</p></div>
+        <div><span class="number">03</span><h2 data-t="three">Follow the download.</h2><p data-t="threeText">See the current stage, elapsed time and errors in the display. Cancel while downloading or open the finished folder.</p></div>
       </section>
-      <section class="note"><h2 data-t="limits">Before you download</h2><p data-t="limitsText">Supports individual Project Zomboid items that permit anonymous SteamCMD access. Collections and login-required items are unsupported. Downloading saves files; installation and activation in the game are up to you. The release is unsigned.</p><p class="small" data-t="art">The illustration is application artwork, not a screenshot.</p></section>
+      <section class="note"><h2 data-t="limits">Before you download</h2><p data-t="limitsText">Supports individual Workshop items across games that permit anonymous SteamCMD access. Collections and login-required items are unsupported. Downloading saves files; installation and activation in the game are up to you. The release is unsigned.</p><p class="small" data-t="art">The illustration is application artwork, not a screenshot.</p></section>
       <section class="note"><h2 data-t="contribute">Contributions welcome.</h2><p data-t="contributeText">Help improve translations, accessibility, reliability or the native interface. Read the contribution guide, open an issue or send a focused pull request.</p><div class="links"><a id="contributing" href="https://github.com/whisperbtw/workshop-device/blob/main/CONTRIBUTING.md" data-t="contributionGuide">Contribution guide</a><a href="https://github.com/whisperbtw/workshop-device/issues" data-t="issues">Issues and ideas</a></div></section>
     </main>
-    <footer><span>Workshop Device · whisperbtw · MIT</span><span data-t="community">Community project. Not affiliated with Valve or The Indie Stone.</span></footer>
+    <footer><span>Workshop Device · whisperbtw · MIT</span><span data-t="community">Community project. Not affiliated with Valve or any game developer.</span></footer>
   </div>
   <script src="site.js"></script>
 </body>

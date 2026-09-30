@@ -17,7 +17,7 @@ The lockfile also includes yanked yoke-derive 0.8.3. These entries are primarily
 CI runs cargo-audit without ignoring vulnerability advisories. Maintenance/yanked notices remain visible in its output. Generate license notices after dependency changes with:
 
 ```powershell
-cargo install cargo-about --version 0.9.2 --locked
+cargo install cargo-about --version 0.9.2 --locked --features cli
 cargo about generate --locked --fail scripts/licenses.hbs -o THIRD-PARTY-NOTICES.html
 ```
 

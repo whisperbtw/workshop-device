@@ -62,8 +62,10 @@ impl Downloader {
         // Resolve the initial/legacy automatic preference to a selected language.
         if settings.language == Language::System {
             settings.language = Language::system();
-            let _ = backend::save_settings(&settings);
         }
+        let preferences_error = backend::save_settings(&settings)
+            .err()
+            .map(|_| Text::SettingsSaveFailed);
         let link = cx.new(|cx| {
             InputState::new(window, cx).placeholder(settings.language.text(Text::PasteLink))
         });
@@ -80,7 +82,7 @@ impl Downloader {
             cancel: Arc::new(AtomicBool::new(false)),
             buttons: Buttons::new(cx),
             screen: Screen::Download,
-            preferences_error: None,
+            preferences_error,
         }
     }
 

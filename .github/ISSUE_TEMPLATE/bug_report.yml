@@ -21,6 +21,11 @@ body:
       label: App version, Windows version and display scaling
     validations:
       required: true
+  - type: input
+    id: workshop
+    attributes:
+      label: Game and public Workshop item link (for download issues)
+      description: Anonymous download access differs by game. Do not include private links.
   - type: textarea
     id: evidence
     attributes:

@@ -1,11 +1,11 @@
 use serde::{Deserialize, Serialize};
 use std::path::PathBuf;
 
-pub const APP_ID: u64 = 108600;
-
 #[derive(Clone, Debug, Serialize, Deserialize)]
 pub struct Download {
     pub id: u64,
+    #[serde(default)]
+    pub app_id: u32,
     pub title: String,
     pub folder: PathBuf,
     pub bytes: u64,
@@ -58,10 +58,12 @@ mod tests {
     #[test]
     fn old_preferences_keep_destination_and_default_to_system_language() {
         let settings: Settings =
-            serde_json::from_str(r#"{"destination":"D:\\mods","history":[]}"#).unwrap();
+            serde_json::from_str(r#"{"destination":"D:\\mods","history":[{"id":123,"title":"Old download","folder":"D:\\mods\\123","bytes":42}]}"#).unwrap();
         assert_eq!(settings.destination, r"D:\mods");
         assert_eq!(settings.language, crate::i18n::Language::System);
         assert!(!settings.auto_open_folder);
+        assert_eq!(settings.history.len(), 1);
+        assert_eq!(settings.history[0].app_id, 0);
         let restored: Settings =
             serde_json::from_slice(&serde_json::to_vec(&settings).unwrap()).unwrap();
         assert_eq!(restored.destination, settings.destination);

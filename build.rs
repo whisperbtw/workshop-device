@@ -4,7 +4,7 @@ fn main() {
         winresource::WindowsResource::new()
             .set_icon("assets/app.ico")
             .set("ProductName", "Workshop Device")
-            .set("FileDescription", "Project Zomboid Workshop downloader")
+            .set("FileDescription", "Steam Workshop downloader")
             .set("OriginalFilename", "Workshop-Device.exe")
             .set("LegalCopyright", "Copyright (c) 2026 whisperbtw")
             .compile()

@@ -1,9 +1,9 @@
 [package]
-name = "pz-workshop-downloader"
-version = "1.0.1"
+name = "workshop-device"
+version = "1.1.0"
 edition = "2024"
 license = "MIT"
-description = "A minimal native Windows downloader for Project Zomboid Workshop mods"
+description = "Download Steam Workshop items to a folder you choose"
 repository = "https://github.com/whisperbtw/workshop-device"
 readme = "README.md"
 

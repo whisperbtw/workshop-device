@@ -2,7 +2,7 @@
 
 # Workshop Device
 
-**Aplicativo nativo e minimalista para Windows que baixa mods individuais do Workshop de Project Zomboid para a pasta escolhida por você.** Feito em Rust e GPUI, com uma interface vertical inspirada em um dispositivo físico.
+**Baixe itens do Steam Workshop para a pasta que você escolher.** Cole o link de um mod, mapa ou outro item do Workshop, escolha onde salvar e aperte **Baixar**. O Workshop Device identifica o jogo automaticamente e salva os arquivos em uma pasta separada. É um aplicativo nativo para Windows; você não precisa digitar comandos do SteamCMD.
 
 [English](../README.md) · **Português** · [日本語](README.ja.md)
 
@@ -14,48 +14,48 @@ A imagem acima é a arte do aplicativo, não uma captura de tela.
 
 Requer Windows 10/11 x64, internet e um driver gráfico compatível com o renderizador do GPUI.
 
-- **Instalador:** baixe `Workshop-Device-Setup-1.0.1.exe` na seção Releases. Instala para o seu usuário, cria um atalho no menu Iniciar, oferece um atalho opcional na área de trabalho e inclui desinstalador. Não exige administrador.
-- **Portátil:** extraia `Workshop-Device-1.0.1-windows-x64.zip` e abra `Workshop-Device.exe`. Mantenha os avisos de licença incluídos.
-- `SHA256SUMS.txt` contém os hashes dos arquivos. Confira com `Get-FileHash .\Workshop-Device-Setup-1.0.1.exe -Algorithm SHA256`.
+- **Instalador:** baixe `Workshop-Device-Setup-1.1.0.exe` na seção Releases. Instala para o seu usuário, cria um atalho no menu Iniciar, oferece um atalho opcional na área de trabalho e inclui desinstalador. Não exige administrador.
+- **Portátil:** extraia `Workshop-Device-1.1.0-windows-x64.zip` e abra `Workshop-Device.exe`. Mantenha os avisos de licença incluídos.
+- `SHA256SUMS.txt` contém os hashes dos arquivos. Confira com `Get-FileHash .\Workshop-Device-Setup-1.1.0.exe -Algorithm SHA256`.
 
 A primeira versão não tem assinatura digital. O Windows pode mostrar um aviso de publicador desconhecido. Baixe apenas das Releases deste repositório.
 
 ## Como usar
 
 1. Abra o Workshop Device.
-2. Cole o link HTTPS de um mod individual no campo **LINK DO MOD**, por exemplo `https://steamcommunity.com/sharedfiles/filedetails/?id=2169435993`. Também é possível usar o ID numérico.
+2. Cole o link HTTPS de um item individual no campo **LINK DO WORKSHOP**. Copie o link da página do item no Steam Workshop. Também é possível usar o ID numérico.
 3. Escolha o destino pelo pequeno botão de pasta.
 4. Aperte o controle grande **BAIXAR**. O visor mostra etapa, tempo decorrido e erros.
 5. Ao concluir, use **SALVO · ABRIR PASTA** para acessar os arquivos.
 
-O SteamCMD oficial é baixado e preparado automaticamente no primeiro uso. Cada download concluído fica em uma nova subpasta `<id-do-workshop>-<timestamp>`. Downloads anteriores não são sobrescritos.
+O SteamCMD oficial é baixado e preparado automaticamente no primeiro uso. O destino inicial é a pasta Downloads do Windows com a subpasta `Workshop`; você pode escolher qualquer pasta onde tenha permissão para salvar. Cada download concluído fica em uma nova subpasta `<id-do-workshop>-<timestamp>`. Downloads anteriores não são sobrescritos.
 
 Arraste a alça superior para mover a janela. Os controles gravados **−** e **×** minimizam e fecham o app. Durante o download, o controle principal vira **PARAR**. Fechar o app encerra seu processo SteamCMD.
+
+## O que pode ser baixado
+
+- Itens individuais do Workshop de diferentes jogos que permitem download anônimo pelo SteamCMD. O app identifica o jogo pelos metadados da Steam, sem restringir a um jogo ou exigir um seletor.
+- Coleções, links inválidos, itens sem um ID de jogo válido e itens indisponíveis são recusados.
+- Inscrever-se na Steam não inicia um download neste app: cole o link aqui.
+- Alguns itens exigem autenticação ou acesso pela conta Steam. Esta versão não tem login na Steam e não baixa esses itens.
+- O download não instala nem ativa o item no jogo. Siga as instruções do autor e confira a compatibilidade com a sua versão.
+- O app usa o acesso permitido pelo SteamCMD e não contorna restrições.
+
+## Arquivos, privacidade e problemas
+
+Preferências, SteamCMD, cache dos itens, recibos e logs ficam em `%LOCALAPPDATA%\PZWorkshopDownloader`. Esse nome antigo do cache é mantido para preservar preferências e downloads nas atualizações. A pasta de destino recebe os arquivos copiados do item. Uma cópia interrompida pode deixar uma pasta provisória `.partial`; ela não representa um download concluído.
+
+O app não pede senha Steam nem chave de API. Ele acessa a API de metadados da Steam e o serviço oficial de download do SteamCMD; o SteamCMD acessa os servidores Steam. Não há serviço de análise de uso no app.
+
+Os erros aparecem no visor. Se o download falhar, confira se o item é público e o jogo permite acesso anônimo pelo SteamCMD. Para erros ao salvar, verifique permissões e espaço disponível. Os logs do próprio SteamCMD ficam no cache.
+
+A desinstalação remove o aplicativo e atalhos; preserva arquivos baixados, cache e preferências. Para reiniciar as preferências, feche o app e remova a pasta de cache manualmente.
 
 ## Configurações e idiomas
 
 A engrenagem à esquerda muda o mesmo visor para configurações. Escolha **English**, **Português** ou **日本語**. Na primeira abertura, o idioma da interface do Windows é detectado; idiomas não suportados usam inglês. Sua escolha fica salva.
 
 **Abrir pasta ao concluir** é opcional e começa desativado. As configurações são salvas automaticamente. Volte pela seta ou pelo controle central. Abrir as configurações não cancela o download em andamento.
-
-## O que pode ser baixado
-
-- Itens individuais de Project Zomboid (Steam app ID `108600`) que permitem download anônimo pelo SteamCMD.
-- Coleções, outros jogos, links inválidos e itens indisponíveis são recusados.
-- Inscrever-se na Steam não inicia um download neste app: cole o link aqui.
-- Alguns itens exigem autenticação ou acesso pela conta Steam. Esta versão não tem login na Steam e não baixa esses itens.
-- O download não instala nem ativa o mod no jogo. Siga as instruções do autor e confira a compatibilidade com a sua versão.
-- O app usa o acesso permitido pelo SteamCMD e não contorna restrições.
-
-## Arquivos, privacidade e problemas
-
-Preferências, SteamCMD, cache dos mods, recibos e logs ficam em `%LOCALAPPDATA%\PZWorkshopDownloader`. A pasta de destino recebe os arquivos copiados do mod. Uma cópia interrompida pode deixar uma pasta provisória `.partial`; ela não representa um download concluído.
-
-O app não pede senha Steam nem chave de API. Ele acessa a API de metadados da Steam e o serviço oficial de download do SteamCMD; o SteamCMD acessa os servidores Steam. Não há serviço de análise de uso no app.
-
-Os erros aparecem no visor. Se o download falhar, confira se o item é público, de Project Zomboid e permite acesso anônimo. Para erros ao salvar, verifique permissões e espaço disponível. Os logs do próprio SteamCMD ficam no cache.
-
-A desinstalação remove o aplicativo e atalhos; preserva mods, cache e preferências. Para reiniciar as preferências, feche o app e remova a pasta de cache manualmente.
 
 ## Compilar e empacotar
 
@@ -70,7 +70,7 @@ cargo test --locked
 cargo build --release --locked
 ```
 
-O executável fica em `target\release\pz-workshop-downloader.exe`. Ícone e metadados são incorporados na compilação.
+O executável fica em `target\release\workshop-device.exe`. Ícone e metadados são incorporados na compilação.
 
 Instale [Inno Setup 6](https://jrsoftware.org/isinfo.php) e execute:
 
@@ -99,4 +99,4 @@ Os pacotes e hashes ficam em `dist\`. O CI verifica formatação, Clippy, testes
 
 Código e arte estão sob [MIT](../LICENSE). As dependências mantêm suas licenças; [THIRD-PARTY-NOTICES.html](../THIRD-PARTY-NOTICES.html) acompanha os pacotes. O ícone foi gerado por IA; o prompt está em [assets/IMAGE.md](../assets/IMAGE.md).
 
-Feito com [GPUI](https://www.gpui.rs/), [gpui-component](https://github.com/longbridge/gpui-component) e [SteamCMD](https://developer.valvesoftware.com/wiki/SteamCMD). O SteamCMD é baixado durante o uso e não é incluído no pacote. Projeto da comunidade, sem vínculo com Valve ou The Indie Stone.
+Feito com [GPUI](https://www.gpui.rs/), [gpui-component](https://github.com/longbridge/gpui-component) e [SteamCMD](https://developer.valvesoftware.com/wiki/SteamCMD). O SteamCMD é baixado durante o uso e não é incluído no pacote. Projeto da comunidade, sem vínculo com a Valve ou desenvolvedores dos jogos. O uso do SteamCMD não significa aprovação da Valve; respeite os termos da Steam e a licença de cada item.
